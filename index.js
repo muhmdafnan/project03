@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const port = 3000
+var jwt = require('jsonwebtoken')
+var token = jwt.sign({ foo: 'bar'}, 'shhhhh');
 
 app.use(express.json())
 
@@ -9,14 +11,16 @@ app.post('/login', (req, res) => {
 
     let result = login(req.body.username, req.body.password)
 
-    res.send(result)
+    let token = generateToken(result)
+ 
+    res.send(token)
   })
 
 app.get('/', (req, res) => {
   res.send('Hello Mom')
 })
 
-app.get('/bye', (req, res) => {
+app.get('/bye', verifytoken, (req, res) => {
     res.send('Bye Mom')
  })
 
@@ -83,4 +87,26 @@ function register(reqUsername,reqPassword,reqName,reqEmail){
       name: reqName,
       email: reqEmail
   })
+}
+
+function generateToken(userData){
+  const token = jwt.sign(
+    userData,
+    'passwordsama');
+    return token
+}
+
+function verifytoken(req, res, next){
+  let header = req.headers.authorization
+  console.log(header)
+
+  let token = header.split(' ') [1]
+
+  jwt.verify(token, 'passwordsama', function(err, decoded){
+    if(err){
+      res.send("Invalid Token")
+    }
+    req.user = decoded
+    next()
+  });
 }

@@ -26,3 +26,19 @@ content-Type: application/json
     "name" : "safwang",
     "email" : "mohdsafwan@gmail.com"
 }
+
+###
+
+POST http://localhost:3000/login
+content-Type: application/json
+
+{
+    "username": "safwan",
+    "password": "qwaszx21"
+}
+
+
+###
+
+GET http://localhost:3000/bye
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFtYXJib3kiLCJwYXNzd29yZCI6ImdvaG9tZSIsIm5hbWUiOiJBbWFyZWVuIiwiZW1haWwiOiJhbWFyZWVuQHV0ZW0uZWR1Lm15IiwiaWF0IjoxNjgxMzY5NDM5fQ.NyHFa57slPqWSlHJToMfHQoylfSWOV1P83LfSOt4iA4
